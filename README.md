@@ -18,7 +18,10 @@ Initié au cours de l'année et fort de ces quelques mois, nous présentons notr
 ## 🛠️ Travail d'équipe    
 
 Après moult réunion, de discussion, de crépage de chinion, nous sommes parvenu à cet accord... nous devons tous bosser.
-        
+
+## Produit final
+
+"Travaux en cours, ne pas déranger"
         
         
 
