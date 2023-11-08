@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+<div class="mess">
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+</div>
+<div id="container-btn">
+        <button onclick="window.location.href='/personne'">Retour</button>
+</div>
+
+
+    <div id="container">
+        <h1>Messageries</h1>
+        <button onclick="window.location.href='/creemessagerie'">Ajouter</button>
+
+        <table border='1'>
+            <tr><th>Sujet</th><th>Messagerie</th><th>Supprimer</th></tr>
+            {% for mess in messagerie %}
+            <tr>
+                <td>{{ mess.sujet }}</td>
+                <td><a href="messagerie/{{ mess.id}}">Messagerie</td>
+                <td><a href="supprimemessagerie/{{ mess.id}}">Supprimer</td>
+            </tr>
+            {% endfor %}
+        </table>
+</div>
+{% endblock %}

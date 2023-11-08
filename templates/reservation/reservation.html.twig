@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+<div id="container">
+    <h1>{{resa.id}}</h1>
+    <button onclick="window.location.href='/reservation'">Retour</button>
+    <button onclick="window.location.href='/modifreservation/{{resa.id}}'">Modifier</button>
+    <button onclick="window.location.href='/supprimevehicule/{{resa.id}}'">Supprimer</button>
+
+        <table border='1'>
+            <tr>
+                <th style="width:8rem">N° reservation</th>
+                <th style="width:5rem">Lundi</th>
+                <th style="width:5rem">Mardi</th>
+                <th style="width:5rem">Mercredi</th>
+                <th style="width:5rem">Jeudi</th>
+                <th style="width:5rem">vendredi</th>
+                <th style="width:5rem">Trajet</th>
+            </tr>
+
+            <tr>
+                <td>{{resa.personne.nom}}-{{resa.id}}</td>
+                <td>
+                    {% if resa.lundi == true %}
+                    X
+                    {% endif %}
+                </td>
+                <td>
+                    {% if resa.mardi == true %}
+                    X
+                    {% endif %}
+                </td>
+                <td>
+                    {% if resa.mercredi == true %}
+                    X
+                    {% endif %}
+                </td>
+                <td>
+                    {% if resa.jeudi == true %}
+                    X
+                    {% endif %}
+                </td>
+                <td>
+                    {% if resa.vendredi == true %}
+                    X
+                    {% endif %}
+                </td>
+                <td>
+                    {{resa.trajet.villeDepart}} - {{resa.trajet.villeArrivee}}
+                </td>
+            </tr>
+
+        </table>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des véhicules{% endblock %}
+
+{% block body %}
+<div class="mess">
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+</div>
+<div id="container-btn">
+        <button onclick="window.location.href='/personne'">Retour</button>
+</div>
+
+    <div id="container">
+        <h1>Liste des vehicules</h1>
+        <button onclick="window.location.href='/creevehicule'">Ajouter</button>
+
+        <table border='1'>
+            <tr>
+                <th style="width:8rem">Marque</th>
+                <th style="width:8rem">Profil</th>
+                <th style="width:8rem">Supprimer</th>
+            </tr>
+            {% for vehicule in vehicules %}
+            <tr>
+                <td>{{ vehicule.marque }}</td>
+                <td><a href="vehicule/{{ vehicule.id}}">Profil</td>
+                <td><a href="supprimevehicule/{{ vehicule.id}}">Supprimer</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}

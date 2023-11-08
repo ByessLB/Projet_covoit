@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+<div id="container">
+
+    <h1>{{vehicule.personne.nom}}</h1>
+
+    <button onclick="window.location.href='/vehicule'">Retour</button>
+    <button onclick="window.location.href='/modifvehicule/{{vehicule.id}}'">Modifier</button>
+    <button onclick="window.location.href='/supprimevehicule/{{vehicule.id}}'">Supprimer</button>
+
+    <p><strong>Marque : </strong> {{vehicule.marque}}</p>
+    <p><strong>Modèle : </strong> {{vehicule.modele}}</p>
+    <p><strong>Nombre de place : </strong> {{vehicule.nbPlace}}</p>
+    <p><strong>Validité assurance : </strong> {{vehicule.validiteAssurance|date("d/m/Y")}}</p>
+    <p><strong>Validité contrôle technique : </strong> {{vehicule.validiteControleTech|date("d/m/Y")}}</p>
+
+</div>
+{% endblock %}

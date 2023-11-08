@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+<div class="mess">
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+</div>
+<div id="container-btn">
+        <button onclick="window.location.href='/personne'">Retour</button>
+</div>
+
+
+    <div id="container">
+        <h1>Reservation</h1>
+        <button onclick="window.location.href='/creereservation'">Ajouter</button>
+
+        <table border='1'>
+            <tr>
+                <th style="width:8rem">N° reservation</th>
+                <th style="width:8rem">Calendrier</th>
+                <th style="width:8rem">Supprimer</th>
+            </tr>
+            {% for resa in reservation %}
+            <tr>
+                <td>{{ resa.id }}</td>
+                <td><a href="reservation/{{ resa.id}}">Profil</td>
+                <td><a href="supprimereservation/{{ resa.id}}">Supprimer</td>
+            </tr>
+            {% endfor %}
+        </table>
+</div>
+{% endblock %}

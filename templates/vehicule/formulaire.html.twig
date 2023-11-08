@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire{% endblock %}
+
+{% block body %}
+<div class="mess">
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+</div>
+
+<div class="container-formulaire">
+    <h1>Formulaire</h1>
+        <button onclick="window.location.href='/vehicule'">Retour</button>
+
+    <div id="form">
+        <div class="form">
+            {{ form_start(monform) }}
+            <div class="elmt">
+                <h3>Profil</h3>
+                {{ form_widget(monform) }}
+            </div><br>
+            <div class="btn">
+                <button type="submit"> OK </button>
+            </div>
+            {{ form_end(monform) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

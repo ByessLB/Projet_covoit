@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trajet{% endblock %}
+
+{% block body %}
+<div class="mess">
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+</div>
+<div id="container-btn">
+        <button onclick="window.location.href='/personne'">Retour</button>
+</div>
+
+
+    <div id="container">
+        <h1>Trajets</h1>
+        <button onclick="window.location.href='/creetrajet'">Ajouter</button>
+
+        <table border='1'>
+            <tr><th>N° Trajet</th><th>Trajet</th><th>Supprimer</th></tr>
+            {% for trajet in trajets %}
+            <tr>
+                <td>{{ trajet.id }}</td>
+                <td><a href="trajet/{{ trajet.id}}">{{trajet.villeDepart}} - {{trajet.villeArrivee}}</td>
+                <td><a href="supprimetrajet/{{ trajet.id}}">Supprimer</td>
+            </tr>
+            {% endfor %}
+        </table>
+</div>
+{% endblock %}

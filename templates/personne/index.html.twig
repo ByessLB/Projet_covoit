@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PersonneController!{% endblock %}
+
+{% block body %}
+<div class="mess">
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+</div>
+
+<div id="container-btn">
+        <button onclick="window.location.href='/vehicule'">Véhicule</button>
+        <button onclick="window.location.href='/messagerie'">Messagerie</button>
+        <button onclick="window.location.href='/trajet'">Trajet</button>
+        <button onclick="window.location.href='/reservation'">Réservation</button>
+</div>
+
+    <div id="container">
+        <h1>Liste des personnes</h1>
+        <button onclick="window.location.href='/creepersonne'">Ajouter</button>
+
+        <table border='1'>
+            <tr>
+                <th style="width:8rem">Nom</th>
+                <th style="width:8rem">Prenom</th>
+                <th style="width:8rem">Profil</th>
+                <th style="width:8rem">Supprimer</th>
+            </tr>
+            {% for personne in personnes %}
+            <tr>
+                <td>{{ personne.nom }}</td>
+                <td>{{ personne.prenom }}</td>
+                <td><a href="personne/{{ personne.id}}">Profil</td>
+                <td><a href="supprimepersonne/{{ personne.id}}">Supprimer</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}

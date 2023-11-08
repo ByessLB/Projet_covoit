@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+<div id="container">
+    <h1>{{trajet.villeDepart}} - {{trajet.villeArrivee}}</h1>
+    <button onclick="window.location.href='/trajet'">Retour</button>
+    <button onclick="window.location.href='/modiftrajet/{{trajet.id}}'">Modifier</button>
+    <button onclick="window.location.href='/supprimetrajet/{{trajet.id}}'">Supprimer</button>
+
+    <h3>Départ</h3>
+    <p><strong>Numéro de rue : </strong> {{trajet.numRueDepart}}</p>
+    <p><strong>Rue : </strong> {{trajet.rueDepart}}</p>
+    <p><strong>Code postal : </strong> {{trajet.cpDepart}}</p>
+    <p><strong>Ville : </strong> {{trajet.villeDepart}}</p>
+
+    <h3>Arrivée</h3>
+        <p><strong>Numéro de rue : </strong> {{trajet.numRueArrivee}}</p>
+    <p><strong>Rue : </strong> {{trajet.rueArrivee}}</p>
+    <p><strong>Code postal : </strong> {{trajet.cpArrivee}}</p>
+    <p><strong>Ville : </strong> {{trajet.villeArrivee}}</p><br>
+
+    <p><strong>Heure aller : </strong> {{trajet.heureAller|format_datetime('none', 'short', locale='fr')}}</p>
+    <p><strong>Heure retour : </strong> {{trajet.heureRetour|format_datetime('none', 'short', locale='fr')}}</p>
+
+</div>
+{% endblock %}

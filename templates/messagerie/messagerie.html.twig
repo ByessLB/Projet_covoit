@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+
+<div id="container">
+    <h1>{{mess.sujet}}</h1>
+    <button onclick="window.location.href='/messageire'">Retour</button>
+    <button onclick="window.location.href='/modifmessagerie/{{mess.id}}'">Modifier</button>
+    <button onclick="window.location.href='/supprimemessagerie/{{mess.id}}'">Supprimer</button>
+
+    <p><strong>Message : </strong> {{mess.message}}</p>
+    <p><strong>Date et heure : </strong> {{mess.dateHeure|date('d/m/Y')}}</p>
+    <p><strong>Statut : </strong> {{mess.statut}}</p>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+<div id="container">
+    <h1>{{personne.Pseudo}}</h1>
+    <button onclick="window.location.href='/personne'">Retour</button>
+    <button onclick="window.location.href='/modifpersonne/{{personne.id}}'">Modifier</button>
+    <button onclick="window.location.href='/supprimepersonne/{{personne.id}}'">Supprimer</button>
+
+    <p><strong>Nom : </strong> {{personne.nom}}</p>
+    <p><strong>Prénom : </strong> {{personne.prenom}}</p>
+    <p><strong>Date de naissance : </strong> {{personne.dateNaissance|date("d/m/Y")}}</p>
+    <p><strong>Adresse mail : </strong> {{personne.email}}</p>
+    <p><strong>Téléphone : </strong> {{personne.tel}}</p>
+    <p><strong>Numéro de rue : </strong> {{personne.numRue}}</p>
+    <p><strong>Rue : </strong> {{personne.rue}}</p>
+    <p><strong>Code Postal : </strong> {{personne.codePostal}}</p>
+    <p><strong>Ville : </strong> {{personne.ville}}</p><br>
+    <p><strong>Numéro AFPA : </strong> {{personne.numAfpa}}</p>
+    <p><strong>Date de début de formation : </strong> {{personne.debutFormation|date('d/m/Y')}}</p>
+    <p><strong>DAte de fin de formation : </strong> {{personne.finFormation|date('d/m/Y')}}</p>
+
+</div>
+{% endblock %}
