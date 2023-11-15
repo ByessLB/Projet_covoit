@@ -15,7 +15,6 @@ class PersonneType extends AbstractType
             ->add('pseudo')
             ->add('nom')
             ->add('prenom')
-            ->add('dateNaissance')
             ->add('numAfpa')
             ->add('tel')
             ->add('numRue')
@@ -26,6 +25,7 @@ class PersonneType extends AbstractType
             ->add('password')
             ->add('debutFormation')
             ->add('finFormation')
+            ->add('dateNaissance')
         ;
     }
 

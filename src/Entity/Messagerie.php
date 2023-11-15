@@ -26,11 +26,6 @@ class Messagerie
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Personne $conducteur = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Personne $passager = null;
 
     public function getId(): ?int
     {
@@ -85,27 +80,4 @@ class Messagerie
         return $this;
     }
 
-    public function getConducteur(): ?Personne
-    {
-        return $this->conducteur;
-    }
-
-    public function setConducteur(?Personne $conducteur): static
-    {
-        $this->conducteur = $conducteur;
-
-        return $this;
-    }
-
-    public function getPassager(): ?Personne
-    {
-        return $this->passager;
-    }
-
-    public function setPassager(?Personne $passager): static
-    {
-        $this->passager = $passager;
-
-        return $this;
-    }
 }

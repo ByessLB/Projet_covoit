@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,6 +57,18 @@ class Personne
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateNaissance = null;
+
+    #[ORM\OneToMany(mappedBy: 'personne', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
+    #[ORM\OneToMany(mappedBy: 'personne', targetEntity: Possession::class)]
+    private Collection $possessions;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+        $this->possessions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -225,6 +239,66 @@ class Personne
     public function setDateNaissance(\DateTimeInterface $dateNaissance): static
     {
         $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setPersonne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getPersonne() === $this) {
+                $reservation->setPersonne(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Possession>
+     */
+    public function getPossessions(): Collection
+    {
+        return $this->possessions;
+    }
+
+    public function addPossession(Possession $possession): static
+    {
+        if (!$this->possessions->contains($possession)) {
+            $this->possessions->add($possession);
+            $possession->setPersonne($this);
+        }
+
+        return $this;
+    }
+
+    public function removePossession(Possession $possession): static
+    {
+        if ($this->possessions->removeElement($possession)) {
+            // set the owning side to null (unless already changed)
+            if ($possession->getPersonne() === $this) {
+                $possession->setPersonne(null);
+            }
+        }
 
         return $this;
     }

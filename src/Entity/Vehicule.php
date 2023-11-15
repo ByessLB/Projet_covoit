@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VehiculeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,8 +31,14 @@ class Vehicule
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $validiteControleTech = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Personne $personne = null;
+    #[ORM\OneToMany(mappedBy: 'vehicule', targetEntity: Effectue::class)]
+    private Collection $effectues;
+
+    public function __construct()
+    {
+        $this->effectues = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -97,15 +105,34 @@ class Vehicule
         return $this;
     }
 
-    public function getPersonne(): ?Personne
+    /**
+     * @return Collection<int, Effectue>
+     */
+    public function getEffectues(): Collection
     {
-        return $this->personne;
+        return $this->effectues;
     }
 
-    public function setPersonne(?Personne $personne): static
+    public function addEffectue(Effectue $effectue): static
     {
-        $this->personne = $personne;
+        if (!$this->effectues->contains($effectue)) {
+            $this->effectues->add($effectue);
+            $effectue->setVehicule($this);
+        }
 
         return $this;
     }
+
+    public function removeEffectue(Effectue $effectue): static
+    {
+        if ($this->effectues->removeElement($effectue)) {
+            // set the owning side to null (unless already changed)
+            if ($effectue->getVehicule() === $this) {
+                $effectue->setVehicule(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -28,11 +28,12 @@ class Reservation
     #[ORM\Column]
     private ?bool $vendredi = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?Trajet $trajet = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Personne $personne = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Trajet $trajet = null;
 
     public function getId(): ?int
     {
@@ -99,6 +100,18 @@ class Reservation
         return $this;
     }
 
+    public function getTrajet(): ?Trajet
+    {
+        return $this->trajet;
+    }
+
+    public function setTrajet(?Trajet $trajet): static
+    {
+        $this->trajet = $trajet;
+
+        return $this;
+    }
+
     public function getPersonne(): ?Personne
     {
         return $this->personne;
@@ -111,15 +124,4 @@ class Reservation
         return $this;
     }
 
-    public function getTrajet(): ?Trajet
-    {
-        return $this->trajet;
-    }
-
-    public function setTrajet(?Trajet $trajet): static
-    {
-        $this->trajet = $trajet;
-
-        return $this;
-    }
 }

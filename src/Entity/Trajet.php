@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TrajetRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,29 +16,26 @@ class Trajet
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $numRueDepart = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $rueDepart = null;
-
     #[ORM\Column]
-    private ?int $CPDepart = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $villeDepart = null;
+    private ?bool $vers_afpa = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $numRueArrivee = null;
+    private ?int $num_rue = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $rueArrivee = null;
+    private ?string $rue = null;
 
-    #[ORM\Column]
-    private ?int $CPArrivee = null;
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $codePostal = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $villeArrivee = null;
+    private ?string $ville = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateFin = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureAller = null;
@@ -44,106 +43,99 @@ class Trajet
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureRetour = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Personne $personne = null;
+    #[ORM\OneToMany(mappedBy: 'trajet', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNumRueDepart(): ?int
+    public function isVersAfpa(): ?bool
     {
-        return $this->numRueDepart;
+        return $this->vers_afpa;
     }
 
-    public function setNumRueDepart(int $numRueDepart): static
+    public function setVersAfpa(bool $vers_afpa): static
     {
-        $this->numRueDepart = $numRueDepart;
+        $this->vers_afpa = $vers_afpa;
 
         return $this;
     }
 
-    public function getRueDepart(): ?string
+    public function getNumRue(): ?int
     {
-        return $this->rueDepart;
+        return $this->num_rue;
     }
 
-    public function setRueDepart(string $rueDepart): static
+    public function setNumRue(int $num_rue): static
     {
-        $this->rueDepart = $rueDepart;
+        $this->num_rue = $num_rue;
 
         return $this;
     }
 
-    public function getCPDepart(): ?int
+    public function getRue(): ?string
     {
-        return $this->CPDepart;
+        return $this->rue;
     }
 
-    public function setCPDepart(int $CPDepart): static
+    public function setRue(string $rue): static
     {
-        $this->CPDepart = $CPDepart;
+        $this->rue = $rue;
 
         return $this;
     }
 
-    public function getVilleDepart(): ?string
+    public function getCodePostal(): ?int
     {
-        return $this->villeDepart;
+        return $this->codePostal;
     }
 
-    public function setVilleDepart(string $villeDepart): static
+    public function setCodePostal(int $codePostal): static
     {
-        $this->villeDepart = $villeDepart;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
 
-    public function getNumRueArrivee(): ?int
+    public function getVille(): ?string
     {
-        return $this->numRueArrivee;
+        return $this->ville;
     }
 
-    public function setNumRueArrivee(int $numRueArrivee): static
+    public function setVille(string $ville): static
     {
-        $this->numRueArrivee = $numRueArrivee;
+        $this->ville = $ville;
 
         return $this;
     }
 
-    public function getRueArrivee(): ?string
+    public function getDateFin(): ?\DateTimeInterface
     {
-        return $this->rueArrivee;
+        return $this->dateFin;
     }
 
-    public function setRueArrivee(string $rueArrivee): static
+    public function setDateFin(\DateTimeInterface $dateFin): static
     {
-        $this->rueArrivee = $rueArrivee;
+        $this->dateFin = $dateFin;
 
         return $this;
     }
 
-    public function getCPArrivee(): ?int
+    public function getDateDebut(): ?\DateTimeInterface
     {
-        return $this->CPArrivee;
+        return $this->dateDebut;
     }
 
-    public function setCPArrivee(int $CPArrivee): static
+    public function setDateDebut(\DateTimeInterface $dateDebut): static
     {
-        $this->CPArrivee = $CPArrivee;
-
-        return $this;
-    }
-
-    public function getVilleArrivee(): ?string
-    {
-        return $this->villeArrivee;
-    }
-
-    public function setVilleArrivee(string $villeArrivee): static
-    {
-        $this->villeArrivee = $villeArrivee;
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }
@@ -172,14 +164,32 @@ class Trajet
         return $this;
     }
 
-    public function getPersonne(): ?Personne
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
     {
-        return $this->personne;
+        return $this->reservations;
     }
 
-    public function setPersonne(?Personne $personne): static
+    public function addReservation(Reservation $reservation): static
     {
-        $this->personne = $personne;
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setTrajet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getTrajet() === $this) {
+                $reservation->setTrajet(null);
+            }
+        }
 
         return $this;
     }
