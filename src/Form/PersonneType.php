@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Personne;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,9 +25,31 @@ class PersonneType extends AbstractType
             ->add('ville')
             ->add('email')
             ->add('password')
-            ->add('debutFormation')
-            ->add('finFormation')
-            ->add('dateNaissance')
+            ->add(
+                'debutFormation',
+                DateType::class,
+                [
+                    'widget'    => 'single_text',
+                    'format'    => 'yyyy-MM-dd'
+                ])
+            ->add(
+                'finFormation',
+                DateType::class,
+                [
+                    'widget'    => 'single_text',
+                    'format'    => 'yyyy-MM-dd'
+                ])
+            ->add(
+                'dateNaissance',
+                BirthdayType::class,
+                [
+                    'placeholder'        => 
+                    [
+                        'day'   => 'Jour',
+                        'month' => 'Mois',
+                        'year'  => 'Année',
+                    ]
+                ])
         ;
     }
 
